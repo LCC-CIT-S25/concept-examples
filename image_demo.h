@@ -7,9 +7,20 @@
 #include <string>
 #include <cstdint>
 
-void demo_image(uint8_t [][3], size_t height, size_t width);
+/*
+ * generate pixels values for a demonstration image
+ *
+ * array size must be width * height * 3
+ */
+void demo_image(uint8_t [], size_t height, size_t width);
 
-bool write_image(const uint8_t data[][3],
+/*
+ * write an image array to a file in BMP format
+ *
+ * Assumes RGB data
+ * array size must be width * height * 3
+ */
+bool write_image(const uint8_t data[],
     uint32_t height, uint32_t width,
     const std::string &path);
 

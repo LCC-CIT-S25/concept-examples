@@ -9,24 +9,29 @@
 
 using namespace std;
 
-void demo_image(uint8_t data[][3], size_t height, size_t width) {
-    for (int i=0; i<height; i++) {
-        for (int j=0; j<width; j++) {
-            data[i*width + j][0] = 0x66;  //red
-            data[i*width + j][1] = ((j>>8)&1)?(j%256):((255-(j%256))); //green
-            data[i*width + j][2] = (i<256)?i:255; //blue
+const uint8_t RGB_SIZE = 3;
+
+void demo_image(uint8_t data[], size_t height, size_t width) {
+    const uint8_t RED_SHADE = 0x66;
+
+    for (int i=0; i < height; i++) {
+        for (int j=0; j < width; j++) {
+            const size_t pixel_offset = (i * width + j) * RGB_SIZE;
+            data[pixel_offset + 0] = RED_SHADE;  //red
+            data[pixel_offset + 1] = ((j>>8) & 1) ? (j % 256) : ((255 - (j % 256))); //green
+            data[pixel_offset + 2] = (i<256) ? i : 255; //blue
         }
     }
 }
 
 
-bool write_image(const uint8_t data[][3],
+bool write_image(const uint8_t data[],
     uint32_t height, uint32_t width,
     const std::string &path)
 {
     bool valid = true;
 
-    fstream f(path, ios_base::binary| ios_base::out);
+    ofstream f(path, ios_base::binary | ios_base::out);
 
     uint32_t len = width * height * 3;
     f << "BM";
@@ -56,8 +61,12 @@ bool write_image(const uint8_t data[][3],
         };
     f.write(color_info, sizeof(color_info));
 
-    for (size_t i=0; i< width*height; i++) {
-        f << data[i][0] << data[i][1] << data[i][2];
+    // Write out image data
+    for (size_t i=0; i < width * height; i++) {
+        // Write out in reverse Blue, Green ,Red
+        f << data[i * RGB_SIZE + 2]
+          << data[i * RGB_SIZE + 1]
+          << data[i * RGB_SIZE + 0];
     }
 
     return valid;
