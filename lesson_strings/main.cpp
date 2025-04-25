@@ -10,26 +10,11 @@ std::string romanNumeral(int num) {
     // numeral Look up table
     const std::string numeralLUT[] =
         {
-        "",
-        "I",
-        "II",
-        "III",
-        "IV",
-        "V",
-        "VI",
-        "VII",
-        "VIII",
-        "IX",
-        "X",
-        "XI",
-        "XII",
-        "XIII",
-        "XIV",
-        "XV",
-        "XVI",
-        "XVII",
-        "XVIII",
-        "XIX",
+        "", "I", "II", "III",
+        "IV", "V", "VI", "VII",
+        "VIII", "IX", "X", "XI",
+        "XII", "XIII", "XIV", "XV",
+        "XVI", "XVII", "XVIII", "XIX",
         "XX",
         };
 
@@ -42,20 +27,21 @@ std::string romanNumeral(int num) {
 /*
  * Check if a string is a palindrome
  * "racecar"
- *  check if character values are identical
+ *  check if character values are identical forward and reverse
  */
 bool isPalindrome(const std::string& str) {
-    bool retVal = true;
+    bool is_palindrome = true;
 
-    size_t len = str.size();
-    for (int i=0; i < len/2; i++) {
-        if (str[i] != str[len-1-i]) {
-            retVal = false;
-            break;
+    //  0123456
+    // "racecar"
+    const int len = str.size();
+    for (int i=0; i < len/2 && is_palindrome; i++) {
+        if (str[i] != str[len - 1 - i]) {
+            is_palindrome = false;
         }
     }
 
-    return retVal;
+    return is_palindrome;
 }
 
 /* find palindromic words in a sentence
@@ -64,13 +50,15 @@ bool isPalindrome(const std::string& str) {
 
 
 int main() {
-    if (false) {
-        for (int i=-1; i < 22; i++) {
-            std::cout << "numeral of " << std::setw(4) << i << " -> "
-            << std::setw(5) << romanNumeral(i) << std::endl;
-        }
+    {
+        std::string s1 = "hello";
+        std::string s2 = "world";
+        s1 += ' '; // s1="hello "
+        s1 += s2; // s1="hello world"
+        s1.push_back('!'); // We can also use this function to add a character s1="hello world!"
+        s1[0] = toupper(s1[0]); //s1 = "Hello world!"
+        std::cout << "result:" << s1 << std::endl;
     }
-
     if (true) {
         std::string palindromes[] =
             {
@@ -98,6 +86,13 @@ int main() {
             std::cout << "testing " << test << "  " <<
                 isPalindrome(test) << std::endl;
 
+        }
+    }
+
+    if (false) {
+        for (int i=-1; i < 22; i++) {
+            std::cout << "numeral of " << std::setw(4) << i << " -> "
+            << std::setw(5) << romanNumeral(i) << std::endl;
         }
     }
 
