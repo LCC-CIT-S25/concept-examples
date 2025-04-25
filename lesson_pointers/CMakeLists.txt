@@ -3,4 +3,4 @@ project(lesson_pointers)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(Lesson_pointers main.cpp)
+add_executable(lesson_pointers main.cpp)

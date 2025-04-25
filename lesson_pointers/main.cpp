@@ -6,6 +6,7 @@ int main() {
 
     std::cout << "size of int `a`: " << sizeof(int) << " " << sizeof(a) <<std::endl;
 
+
     /*
      * "address of" operator
      * uses the `&` before a variable
@@ -17,7 +18,7 @@ int main() {
      * a + &b
     */
 
-    std::cout << "addresses of `a` and `b` " << &a << " " << &b << std::endl;
+    std::cout << "addresses of `a` and `b` " << &a << " " << &b << " " << std::endl;
 
     /* How to store an address?
      *
@@ -39,45 +40,67 @@ int main() {
     a++;
     std::cout << "*pa " << *pa << " a " << a << std::endl;
 
+    (*pa)++;
+    std::cout << "*pa " << *pa << " a " << a << std::endl;
+
     /*
      * arrays are really pointers!
      */
 
-    int array[] = {1, 2, 3, 4, 5}; // sizeof(array) == sizeof(int) * 5 == 20 bytes
-    /*
-    int a0 = 1;
-    int a1 = 2;
-    int a2 = 3;
-    ...
-    */
+    if (true) {
+        int array[] = {1, 2, 3, 4, 5}; // sizeof(array) == sizeof(int) * 5 == 20 bytes
+        /*
+        int a0 = 1;
+        int a1 = 2;
+        int a2 = 3;
+        ...
+        */
 
-    for (int i = 0; i < 5; i++) {
-        std::cout << "address of array[" << i << "]: " << &array[i] << std::endl;
+        for (int i = 0; i < 5; i++) {
+            std::cout << "address of array[" << i << "]: " << &array[i] << std::endl;
+        }
+
+        std::cout << "array: " << array <<std::endl;
+
+        /* pointers are an integral type
+         * This means we can add, subtract, or do other math with them!
+         */
+
+        if (true) {
+            for (int i = 0; i < 5; i++) {
+                std::cout << "address of array[" << i << "]: " << &array[i] <<
+                    " (array + i): " << (array + i) << std::endl; // address + i * sizeof(type)
+            }
+        }
+
+        /* This is why we use zero indexing
+         *
+         * The `[]` to reference an array element is equivalent to moving forward the
+         * correct number of bytes to read another of the same type.
+         *
+         * ## Pointer Arithmatic
+         * `*(array + 1)` is equivalent to `array[1]`
+         */
+
+        if (true) {
+            for (int i = 0; i < 5; i++) {
+                std::cout << "array[" << i << "]: " << array[i] <<
+                    " *(array + i): " << *(array + i) << std::endl;
+            }
+        }
+
     }
 
-    std::cout << "array: " << array <<std::endl;
+    //
+    {
+        std::string s1 = "hello";
 
-    /* pointers are an integral type
-     * This means we can add, subtract, or do other math with them!
-     */
-    for (int i = 0; i < 5; i++) {
-        std::cout << "address of array[" << i << "]: " << &array[i] <<
-            " (array + i): " << (array + i) << std::endl;
-    }
+        char* ps1 = s1.data();
+        while (*ps1 != '\0') {
+            std::cout << "ch: " << *ps1 << "  address:" << (void*)ps1 << std::endl;
+            ps1++;
+        }
 
-    /* This is why we use zero indexing
-     *
-     * The `[]` to reference an array element is equivalent to moving forward the
-     * correct number of bytes to read another of the same type.
-     *
-     * ## Pointer Arithmatic
-     * `*(array + 1)` is equivalent to `array[1]`
-     */
-
-
-    for (int i = 0; i < 5; i++) {
-        std::cout << "array[" << i << "]: " << array[i] <<
-            " *(array + i): " << *(array + i) << std::endl;
     }
 
     return 0;
