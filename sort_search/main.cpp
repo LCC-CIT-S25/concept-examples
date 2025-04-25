@@ -3,6 +3,9 @@
  */
 #include <iostream>
 
+// For qsort
+#include <cstdlib>
+
 using namespace std;
 
 void printStringArray(const string strs[], size_t len) {
@@ -20,7 +23,7 @@ void bubbleSort(string arr[], size_t len) {
 
     for (size_t i = 0, swaps=1; (i<len && swaps > 0); i++) {
         swaps = 0;
-        for (int j=0; j < len-1; j++) {
+        for (int j=0; j < len - 1; j++) {
             if (arr[j] > arr[j+1]) {
                 string tmp = arr[j];
                 arr[j] = arr[j+1];
@@ -70,52 +73,144 @@ void insertionSort(string arr[], size_t len) {
 }
 
 int main() {
-    if (1) {
-        string s1 = "hello";
-        string s2 = "hello world";
+
+    if (false) {
+        string s1 = "Hello";
+        string s2 = "Hello world";
         cout << "s2 compared to s1 " << s1.compare(s2) << endl;
         cout << "s1 compared to s2 (negative of above) " << s2.compare(s1) << endl;
+
+        if (s1 > s2) {
+            cout << "s1(" << s1 << ") is greater than s2(" << s2 << ")" << endl;
+        } else if (s2 > s1) {
+            cout << "s2(" << s2 << ") is greater than s1(" << s1 << ")" << endl;
+        } else {
+            cout << "s1 equals s2 " << s1 << "==" << s2 << endl;
+        }
     }
 
-    if (1) {
-        const string fruits[] = {"apple", "grape", "blueberry", "pear", "pear (bartlett)"};
-        //printStringArray(fruits);
+    /*
+     * We'll cover 3 algorithms for sorting arrays in place. There are many others,
+     * but these are a good place to start and understand how the same problem can
+     * be solved in different ways.
+     *
+     * If you want to research a more complex algorithm not covered, I'd recommend reading
+     * about quick sort.
+     */
+    if (true) {
+        const string fruits[] = {
+            "apple",
+            "grape",
+            "blueberry",
+            "pear",
+            "pear (bartlett)",
+            "aaaaaaaaaaaaaaaaaaa"};
+
+        const size_t FRUITS_LEN = sizeof(fruits)/sizeof(fruits[0]);
+
+        //printStringArray(fruits, FRUITS_LEN);
         for (auto f : fruits ) {
             cout << f << endl;
         }
 
-        const size_t len = sizeof(fruits)/sizeof(fruits[0]);
+
         // bubble sort or stone sort
-        {
-            string b[len];
-            std::copy(fruits, fruits+len, b);
+        if (false) {
+            string b[FRUITS_LEN];
+            std::copy(fruits, fruits+FRUITS_LEN, b);
+
             cout << "Bubble Sort" <<endl;
-            printStringArray(b, len);
-            bubbleSort(b, len);
-            printStringArray(b, len);
+            printStringArray(b, FRUITS_LEN);
+            bubbleSort(b, FRUITS_LEN);
+            printStringArray(b, FRUITS_LEN);
         }
 
         // selection sort
-        {
-            string b[len];
-            std::copy(fruits, fruits+len, b);
+        if (false) {
+            string b[FRUITS_LEN];
+            std::copy(fruits, fruits+FRUITS_LEN, b);
+
             cout << "Selection Sort" <<endl;
-            printStringArray(b, len);
-            selectionSort(b, len);
-            printStringArray(b, len);
+            printStringArray(b, FRUITS_LEN);
+            selectionSort(b, FRUITS_LEN);
+            printStringArray(b, FRUITS_LEN);
         }
 
         // insertion sort
-        {
-            string b[len];
-            std::copy(fruits, fruits+len, b);
+        if (false) {
+            string b[FRUITS_LEN];
+            std::copy(fruits, fruits+FRUITS_LEN, b);
             cout << "Insertion Sort" <<endl;
-            printStringArray(b, len);
-            insertionSort(b, len);
-            printStringArray(b, len);
+            printStringArray(b, FRUITS_LEN);
+            insertionSort(b, FRUITS_LEN);
+            printStringArray(b, FRUITS_LEN);
         }
 
-        // quick sort (not covered here)
+        // there are other sorting algorithms
+    }// end of sorting algorithms
+
+    // Another important aspect is searching data.
+    // If the data is known to be sorted there are several approaches to make search
+    // We will cover the binary or logarithmic search.
+    // This will divide and concur. It will check the midpoint, then know if the search value
+    // will be earlier or later in the sequence. Now that it knows which half the value would be in,
+    // treat that half as if it were all the data and try the midpoint of that data. Repeat until
+    // There are no elements left or until you have found the value.
+    if (true) {
+        string nato_alpha[] = {
+            "alpha",
+            "bravo",
+            "charlie",
+            "delta",
+            "echo",
+            "foxtrot",
+            "golf",
+            "hotel",
+            "india",
+            "juliet",
+            "kilo",
+            "lima",
+            "mike",
+            "november",
+            "oscar",
+            "papa",
+            "quebec",
+            "romeo",
+            "sierra",
+            "tango",
+            "uniform",
+            "victor",
+            "whiskey",
+            "xray",
+            "yankee",
+            "zulu",
+            };
+
+        string target = "mike";
+
+        bool found = false;
+        size_t left = 0;
+        size_t cur = -1;
+        size_t right = sizeof(nato_alpha)/sizeof(string) - 1;
+        while (left <= right && !found) {
+            cur = left + (right - left)/2;
+
+            //debug
+            cout << "current range : [" << left <<", " << right << "] looking @ " << cur << endl;
+
+            if (nato_alpha[cur] < target) {
+                left = cur + 1;
+            }  else if (nato_alpha[cur] > target) {
+                right = cur - 1;
+            } else {
+                found = true;
+            }
+        }
+        if (found) {
+            cout << "found @ " << cur << endl;
+        } else {
+            cout << target << " not found!" << endl;
+        }
 
     }
 
