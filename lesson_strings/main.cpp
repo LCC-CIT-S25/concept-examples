@@ -48,6 +48,18 @@ bool isPalindrome(const std::string& str) {
  *
  */
 
+/*
+ * make a string palindromic
+ */
+std::string mirrorString(const std::string & str) {
+    std::string result = str;
+
+    for (int i=str.size() - 2; i>=0; i--) {
+        result.push_back(str[i]);
+    }
+
+    return result;
+}
 
 int main() {
     {
@@ -85,6 +97,7 @@ int main() {
         for (auto& test: notPalindromic) {
             std::cout << "testing " << test << "  " <<
                 isPalindrome(test) << std::endl;
+            std::cout << "I fixed it " << mirrorString(test) << std::endl;
 
         }
     }
